@@ -90,7 +90,55 @@ def admin_login(window = window):
     return log_in_frame
 
 
+sign_up_frame = Frame(window)
+
+# window.title("Sign up")
+
+Label(sign_up_frame, text="Sign up", width=13, font=("arial", 20)).grid(column=3,
+                                                                row=1)
+
+Label(sign_up_frame, text="Display name").grid(column=2, row=2)
+name = Entry(sign_up_frame, width=26)
+name.insert(0, "malcolm")
+
+Label(sign_up_frame, text="Username").grid(column=2, row=3)
+username = Entry(sign_up_frame, width=26)
+username.insert(0, "malcolm")
+
+
+Label(sign_up_frame, text="Password").grid(column=2, row=4)
+password = Entry(sign_up_frame, show="*", width=26)
+password.insert(0, "Malcolmstone18")
+
+
+Label(sign_up_frame, text="email").grid(column=2, row=5)
+email = Entry(sign_up_frame, width=26)
+email.insert(0, "mstone@coolmail.com")
+
+
+button = Button(sign_up_frame, text="enter")
+
+
+name.grid(column=3, row=2)
+username.grid(column=3, row=3)
+
+password.grid(column=3, row=4)
+email.grid(column=3, row=5)
+
+
+
+button.grid(column=3, row=6)
+
+sign_up_frame.place(x=5, y=0)
+
+
+
+
+
+
 
 #login_page(window).place(x=5, y=0)
-admin_login(window).place(x=5, y=0)
+#admin_login(window).place(x=5, y=0)
 window.mainloop()
+
+
