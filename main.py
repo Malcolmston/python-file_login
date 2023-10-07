@@ -47,38 +47,50 @@ def login_page(window = window):
 
     return log_in_frame
 
-log_in_frame = Frame(window)
+def admin_login(window = window): 
+    '''admin login page
+    A function that allows for a user to login with the inputs. Thif function is for admin users.
+
+    Inputs:
+        window ( TK = window object ): the main window object for your page
+    Returns:
+        frame (window): returns a frame that contains the login page.
+
+    '''
+        
+    log_in_frame = Frame(window)
 
 
-Label(log_in_frame , text="Admin Log in", width=13,font=("arial",20)).grid(column=3, row=1)
+    Label(log_in_frame , text="Admin Log in", width=13,font=("arial",20)).grid(column=3, row=1)
 
 
-Label(log_in_frame , text="Username").grid(column=2, row=2)
-username = Entry(log_in_frame, width=26)
-username.insert(0, "malcolm")
+    Label(log_in_frame , text="Username").grid(column=2, row=2)
+    username = Entry(log_in_frame, width=26)
+    username.insert(0, "malcolm")
 
-Label(log_in_frame , text="Password").grid(column=2, row=3)
-password = Entry(log_in_frame , show="*", width=26)
-password.insert(0, "Malcolmstone18")
+    Label(log_in_frame , text="Password").grid(column=2, row=3)
+    password = Entry(log_in_frame , show="*", width=26)
+    password.insert(0, "Malcolmstone18")
 
-Label(log_in_frame , text="Admin id").grid(column=2, row=4)
-admin_id = Entry(log_in_frame , width=26)
-admin_id.insert(0, "pq12#2")
+    Label(log_in_frame , text="Admin id").grid(column=2, row=4)
+    admin_id = Entry(log_in_frame , width=26)
+    admin_id.insert(0, "pq12#2")
 
-button = Button(log_in_frame, text= "enter")
+    button = Button(log_in_frame, text= "enter")
 
 
-username.grid(column=3, row=2)
-password.grid(column=3, row=3)
-admin_id.grid(column=3, row=4)
+    username.grid(column=3, row=2)
+    password.grid(column=3, row=3)
+    admin_id.grid(column=3, row=4)
 
-button.bind("<Button-1>", print)
+    button.bind("<Button-1>", print)
 
-button.grid(column=3, row=5)
+    button.grid(column=3, row=5)
 
+    return log_in_frame
 
 
 
 #login_page(window).place(x=5, y=0)
-log_in_frame.place(x=5, y=0)
+admin_login(window).place(x=5, y=0)
 window.mainloop()
