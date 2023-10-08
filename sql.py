@@ -99,6 +99,21 @@ class SQLHelper:
 
         return replace_all("  ", " ", expresion)[:-1]
 
+    # sets forgen key update and change types
+    def foreign_func(self, type = 0 ):
+        if type == 'null' or type == 'none' or type == None or type == 'Null' or type == 'empty':
+            return "SET NULL"
+        elif type == 'default' or type == 'def' or type == 'norm' or type == 'auto':
+            return "SET DEFAULT"
+        elif type == 'restrict' or type == 'rest' or type == 'lim' or type == 'limit' or type == 'block':
+            return "RESTRICT"
+        elif type == 'no' or type == '':
+            return "NO ACTION"
+        elif type == 'cascade' or type == 'update' or type == "change":
+            return "CASCADE"
+        else:
+            return "CASCADE"
+        
     # allows for a user to create forgen keys for a table
     def call_forgen(self, key, foreign_table, foreign_column, update="CASCADE", delete="SET NULL"):
         expresion = f"FOREIGN KEY ({key}) REFERENCES {foreign_table} ({foreign_column}) ON UPDATE {update} ON DELETE {delete}" 
