@@ -26,3 +26,7 @@ class SQLHelper:
         self.cursor = cursor
         self.conn = conn
 
+
+    def execute(self, run, key):
+        self.conn.execute(run, key)
+        self.conn.commit()
