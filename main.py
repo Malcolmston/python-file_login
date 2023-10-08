@@ -5,6 +5,8 @@ from tkinter import filedialog
 from tkinter import simpledialog
 
 
+from sql import SQLHelper 
+
 window = Tk()
 
 window.geometry("600x600")
