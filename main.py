@@ -5,7 +5,7 @@ from tkinter import filedialog
 from tkinter import simpledialog
 
 
-from sql import SQLHelper 
+from sql import SQLHelper as sql
 
 window = Tk()
 
@@ -145,6 +145,17 @@ def signup_page(window = window):
 
 
 
+arr = [
+    sql.call_row("id", "INTEGER", False, False, '', '', True),
+    sql.call_row("dip_name", "VARCHAR(255)"),
+    sql.call_row("username", "VARCHAR(100)", False, True),
+    sql.call_row("password", "VARCHAR(255)"),
+    sql.call_row("email", "VARCHAR(255)", False, True),
+    sql.call_row("type", "VARCHAR(100)", default='basic', is_null=True),
+    sql.call_forgen(key="admin id", foreign_table = "admin", foreign_column = "pwd" )
+
+    #sql.call_row("deleted", "BOOL",True)
+]
 
 
 
