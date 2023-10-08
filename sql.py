@@ -123,3 +123,9 @@ class SQLHelper:
         expresion = f"SELECT DISTINCT {rows} FROM {name} ON CONFLECT DO NOTHING"
 
         return expresion
+
+    # selects using a limited pool
+    def select_limit(self, rows, name, limit):
+        expresion = f"SELECT {rows} FROM {name} LIMIT {limit} ON CONFLECT DO NOTHING"
+
+        return expresion
