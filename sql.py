@@ -71,6 +71,34 @@ class SQLHelper:
         return expresion
     
         # allows user to insert a row into a sqlite table
+   
+     def call_row(self,
+                 name_tag=None,
+                 data_type=None,
+                 is_null=False,
+                 is_unique=False,
+                 check='',
+                 default='',
+                 pk=False):
+
+        if (data_type == None):
+            return ""
+        elif (is_unique == True and is_null == True):
+            #warning clause
+            print(
+                "this key may only have 1 null value. This will not be an ishue; however, you may want to consider removing the is_null parameter."
+            )
+        elif (is_null == True and not (default == '')):
+            #warning clause
+            print(
+                "the default clause will always be run if a case is null. consider removing the is null parameter."
+            )
+
+        expresion = f"{name_tag} {data_type} {'' if is_null else 'NOT NULL '} {'UNIQUE ' if is_unique else ' '} {'PRIMARY KEY ' if pk else' '}  {f'CHECK({check})' if not (check == '') else '' }"
+
+        return replace_all("  ", " ", expresion)[:-1]
+
+   
     def insert(self, name, insert_rows, values):
         expresion = f"INSERT INTO {name} ({insert_rows}) VALUES ({values}) ON CONFLICT DO NOTHING"
 
