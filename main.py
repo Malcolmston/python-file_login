@@ -155,7 +155,7 @@ user_sql = [
     sql.call_row("email", "VARCHAR(255)", False, True),
     sql.call_row("type", "VARCHAR(100)", default='basic', is_null=True),
     sql.call_row("admin_id", "VARCHAR(100)", default='', is_null=True),
-    sql.call_row("deleted", "DATE", default='current_date'),
+    sql.call_row("deleted", "DATE", is_null=True),
     sql.call_forgen(key="admin_id", foreign_table = "admin", foreign_column = "pwd" )
 ]
 
@@ -198,6 +198,10 @@ sql.run(sql.create_table("admin", ','.join(admin_sql)))
 sql.run(sql.create_table("users", ','.join(user_sql)))
 sql.run(sql.create_table("files", ','.join(file_table)))
 
+
+sql.run( 
+    sql.insert("users", "dip_name, username, password, email, type, deleted", "'a','a','a','a','a', current_date")
+)
 
 
 #login_page(window).place(x=5, y=0)
