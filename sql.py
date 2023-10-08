@@ -91,3 +91,10 @@ class SQLHelper:
         expresion = f"ALTER TABLE {name} ADD {insert_rows} ON CONFLECT DO NOTHING"
 
         return expresion
+
+
+    # allows for a user to remove a row to a sqlite table
+    def drop_column(self, name, column_name):
+        expresion = f"ALTER TABLE {name} DROP COLUMN {column_name} ON CONFLECT DO NOTHING"
+
+        return expresion
