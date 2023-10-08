@@ -157,7 +157,11 @@ user_sql = [
     #sql.call_row("deleted", "BOOL",True)
 ]
 
+admin_sql = [
+        sql.call_row("id", "INTEGER", False, False, '', '', True),
+        sql.call_row("pwd", "VARCHAR(255)", is_unique=True)
 
+]
 
 
 #login_page(window).place(x=5, y=0)
