@@ -105,3 +105,9 @@ class SQLHelper:
         expresion = f"UPDATE {name} SET {column_name} = '{new_value}' { f'WHERE {where}' if where else ''}"
 
         return expresion
+    
+            # allows a user to re-name a table from sqlite table
+    def rename_table(self, origonal_name, new_name):
+        expresion = f"ALTER TABLE {origonal_name} RENAME TO IF NOT EXISTS {new_name}"
+
+        return expresion
