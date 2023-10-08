@@ -69,3 +69,14 @@ class SQLHelper:
         expresion = f"CREATE TABLE IF NOT EXISTS {name} ({row_info})"
 
         return expresion
+    
+        # allows user to insert a row into a sqlite table
+    def insert(self, name, insert_rows, values):
+        expresion = f"INSERT INTO {name} ({insert_rows}) VALUES ({values}) ON CONFLICT DO NOTHING"
+
+
+        return expresion
+ 
+
+        # allowes a user to delete a table from sqlite table
+    
