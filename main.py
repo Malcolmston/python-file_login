@@ -165,10 +165,38 @@ admin_sql = [
 
 ]
 
+
+file_table = [
+    sql.call_row("id", "INTEGER", pk=True),
+
+
+    sql.call_row("path", "TEXT"),
+    sql.call_row("name", "VARCHAR(255)",True, is_unique=True),
+
+    sql.call_row("data", "BLOB"),
+   
+
+    sql.call_row("size", "INTEGER"),    
+
+    sql.call_row("added", "DATE"),
+
+    sql.call_row("created", "DATE"),
+    sql.call_row("edited", "DATE"),
+
+     sql.call_row("user_id", "INTEGER"),
+
+    sql.call_row("deleted", "DATE", default='current_date'),
+
+
+    sql.call_forgen(key="user_id", foreign_table = "users", foreign_column = "id" )
+]
+
+
 sql.conect("users.sqlite")
 
 sql.run(sql.create_table("admin", ','.join(admin_sql)))
 sql.run(sql.create_table("users", ','.join(user_sql)))
+sql.run(sql.create_table("files", ','.join(file_table)))
 
 
 
