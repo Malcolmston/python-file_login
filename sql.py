@@ -80,3 +80,8 @@ class SQLHelper:
 
         # allowes a user to delete a table from sqlite table
     
+    # delets a table from sqlite table
+    def delete(self, name):
+        expresion = f"DROP TABLE IF EXISTS {name}"
+
+        return expresion
