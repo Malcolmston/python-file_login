@@ -5,7 +5,9 @@ from tkinter import filedialog
 from tkinter import simpledialog
 
 
-from sql import SQLHelper as sql
+from sql import SQLHelper
+
+sql = SQLHelper()
 
 window = Tk()
 
@@ -152,10 +154,11 @@ user_sql = [
     sql.call_row("password", "VARCHAR(255)"),
     sql.call_row("email", "VARCHAR(255)", False, True),
     sql.call_row("type", "VARCHAR(100)", default='basic', is_null=True),
-    sql.call_forgen(key="admin id", foreign_table = "admin", foreign_column = "pwd" )
-
-    #sql.call_row("deleted", "BOOL",True)
+    sql.call_row("admin_id", "VARCHAR(100)", default='', is_null=True),
+    sql.call_forgen(key="admin_id", foreign_table = "admin", foreign_column = "pwd" )
 ]
+
+print( user_sql )
 
 admin_sql = [
         sql.call_row("id", "INTEGER", False, False, '', '', True),
@@ -163,9 +166,15 @@ admin_sql = [
 
 ]
 
+sql.conect("users.sqlite")
+
+sql.run(sql.create_table("admin", ','.join(admin_sql)))
+sql.run(sql.create_table("users", ','.join(user_sql)))
+
+
 
 #login_page(window).place(x=5, y=0)
 #admin_login(window).place(x=5, y=0)
-window.mainloop()
+# window.mainloop()
 
 
