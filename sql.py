@@ -16,3 +16,13 @@ def replace_all(sub, new_line, string):
         i += 1
 
     return string
+
+
+class SQLHelper:
+
+    def __init__(self, databace=None, name=None, cursor=None, conn=None):
+        self.databace = databace
+        self.name = name
+        self.cursor = cursor
+        self.conn = conn
+
