@@ -145,7 +145,7 @@ def signup_page(window = window):
 
 
 
-arr = [
+user_sql = [
     sql.call_row("id", "INTEGER", False, False, '', '', True),
     sql.call_row("dip_name", "VARCHAR(255)"),
     sql.call_row("username", "VARCHAR(100)", False, True),
