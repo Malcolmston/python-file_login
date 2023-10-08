@@ -111,3 +111,9 @@ class SQLHelper:
         expresion = f"ALTER TABLE {origonal_name} RENAME TO IF NOT EXISTS {new_name}"
 
         return expresion
+    
+        # allows for a user select data using the header as keys. the * selecter will work.
+    def select_column(self, rows, name, where = ""):
+        expresion = f"SELECT {rows} FROM {name}{ ' WHERE '+where if where != '' else ''}"
+
+        return expresion
