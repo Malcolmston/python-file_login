@@ -164,3 +164,4 @@ cython_debug/
 # database
 *.sqlite
 *.db
+*.sql
