@@ -26,7 +26,17 @@ class SQLHelper:
         self.cursor = cursor
         self.conn = conn
 
+    # allows for a user to connect there server
+    def conect(self, name):
+        conn = sqlite3.connect(name)
+        cursor = conn.cursor()
+        self.name = name
+        self.cursor = cursor
+        self.conn = conn
 
     def execute(self, run, key):
         self.conn.execute(run, key)
         self.conn.commit()
+
+    
+    
