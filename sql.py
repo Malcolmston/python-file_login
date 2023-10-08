@@ -85,3 +85,9 @@ class SQLHelper:
         expresion = f"DROP TABLE IF EXISTS {name}"
 
         return expresion
+
+    # allows for a user to insert a new header row to a sqlite table
+    def add_column(self, name, insert_rows):
+        expresion = f"ALTER TABLE {name} ADD {insert_rows} ON CONFLECT DO NOTHING"
+
+        return expresion
