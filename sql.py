@@ -98,3 +98,10 @@ class SQLHelper:
         expresion = f"ALTER TABLE {name} DROP COLUMN {column_name} ON CONFLECT DO NOTHING"
 
         return expresion
+    
+    # re-name a column in a table
+    def update_column(self, name, column_name, new_value, where = False):
+        where = False if not(bool(where)) and len(where.strip() ) != 0 else where
+        expresion = f"UPDATE {name} SET {column_name} = '{new_value}' { f'WHERE {where}' if where else ''}"
+
+        return expresion
