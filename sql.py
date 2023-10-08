@@ -117,3 +117,9 @@ class SQLHelper:
         expresion = f"SELECT {rows} FROM {name}{ ' WHERE '+where if where != '' else ''}"
 
         return expresion
+    
+    # will selcet values that are new from a table. it uses the same SQL as select_column with the keyword "DISTINCT"
+    def select_distinct(self, rows, name):
+        expresion = f"SELECT DISTINCT {rows} FROM {name} ON CONFLECT DO NOTHING"
+
+        return expresion
