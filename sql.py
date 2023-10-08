@@ -129,3 +129,9 @@ class SQLHelper:
         expresion = f"SELECT {rows} FROM {name} LIMIT {limit} ON CONFLECT DO NOTHING"
 
         return expresion
+    
+        # allows for a user to call a temperay table form a second table, that will destroy on call
+    def select_aliases(self, name, row_name, new_row_name):
+        expresion = f"SELECT {row_name} AS {new_row_name} FROM {name} ON CONFLECT DO NOTHING"
+
+        return expresion
