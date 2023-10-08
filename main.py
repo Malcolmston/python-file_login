@@ -155,10 +155,9 @@ user_sql = [
     sql.call_row("email", "VARCHAR(255)", False, True),
     sql.call_row("type", "VARCHAR(100)", default='basic', is_null=True),
     sql.call_row("admin_id", "VARCHAR(100)", default='', is_null=True),
+    sql.call_row("deleted", "DATE", default='current_date'),
     sql.call_forgen(key="admin_id", foreign_table = "admin", foreign_column = "pwd" )
 ]
-
-print( user_sql )
 
 admin_sql = [
         sql.call_row("id", "INTEGER", False, False, '', '', True),
