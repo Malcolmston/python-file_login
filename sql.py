@@ -72,7 +72,8 @@ class SQLHelper:
     
         # allows user to insert a row into a sqlite table
    
-     def call_row(self,
+    # allows for a user to create rows for a table
+    def call_row(self,
                  name_tag=None,
                  data_type=None,
                  is_null=False,
@@ -97,6 +98,12 @@ class SQLHelper:
         expresion = f"{name_tag} {data_type} {'' if is_null else 'NOT NULL '} {'UNIQUE ' if is_unique else ' '} {'PRIMARY KEY ' if pk else' '}  {f'CHECK({check})' if not (check == '') else '' }"
 
         return replace_all("  ", " ", expresion)[:-1]
+
+    # allows for a user to create forgen keys for a table
+    def call_forgen(self, key, foreign_table, foreign_column, update="CASCADE", delete="SET NULL"):
+        expresion = f"FOREIGN KEY ({key}) REFERENCES {foreign_table} ({foreign_column}) ON UPDATE {update} ON DELETE {delete}" 
+         
+        return expresion
 
    
     def insert(self, name, insert_rows, values):
