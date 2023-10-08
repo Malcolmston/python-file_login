@@ -39,4 +39,27 @@ class SQLHelper:
         self.conn.commit()
 
     
-    
+        # runs a line a sql code
+    def run(self, txt, *extra):
+        try:
+            if extra:
+                print(txt, extra )
+                self.conn.execute(txt, extra)
+            else:
+                self.conn.execute(txt)
+
+            self.conn.commit()
+            return True
+        except NameError:
+            print(NameError)
+            return False
+
+    # runs a line a sql code with an expected output
+    def runRet(self, txt):
+        try:
+            res = self.conn.execute(txt)
+            # maps over the array of truples. the list is then converted from a array object to an array of arrays
+            return numpy.array(
+                list(map((lambda tru: numpy.asarray(tru)), res.fetchall())))
+        except NameError:
+            return False
