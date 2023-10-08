@@ -63,3 +63,9 @@ class SQLHelper:
                 list(map((lambda tru: numpy.asarray(tru)), res.fetchall())))
         except NameError:
             return False
+
+    # returns the statement to create a table. the input arr varible should have name, statements
+    def create_table(self, name, row_info):
+        expresion = f"CREATE TABLE IF NOT EXISTS {name} ({row_info})"
+
+        return expresion
