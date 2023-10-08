@@ -5,7 +5,9 @@ from tkinter import filedialog
 from tkinter import simpledialog
 
 
-from sql import SQLHelper 
+from sql import SQLHelper
+
+sql = SQLHelper()
 
 window = Tk()
 
@@ -145,12 +147,61 @@ def signup_page(window = window):
 
 
 
+user_sql = [
+    sql.call_row("id", "INTEGER", False, False, '', '', True),
+    sql.call_row("dip_name", "VARCHAR(255)"),
+    sql.call_row("username", "VARCHAR(100)", False, True),
+    sql.call_row("password", "VARCHAR(255)"),
+    sql.call_row("email", "VARCHAR(255)", False, True),
+    sql.call_row("type", "VARCHAR(100)", default='basic', is_null=True),
+    sql.call_row("admin_id", "VARCHAR(100)", default='', is_null=True),
+    sql.call_row("deleted", "DATE", default='current_date'),
+    sql.call_forgen(key="admin_id", foreign_table = "admin", foreign_column = "pwd" )
+]
 
+admin_sql = [
+        sql.call_row("id", "INTEGER", False, False, '', '', True),
+        sql.call_row("pwd", "VARCHAR(255)", is_unique=True)
+
+]
+
+
+file_table = [
+    sql.call_row("id", "INTEGER", pk=True),
+
+
+    sql.call_row("path", "TEXT"),
+    sql.call_row("name", "VARCHAR(255)",True, is_unique=True),
+
+    sql.call_row("data", "BLOB"),
+   
+
+    sql.call_row("size", "INTEGER"),    
+
+    sql.call_row("added", "DATE"),
+
+    sql.call_row("created", "DATE"),
+    sql.call_row("edited", "DATE"),
+
+     sql.call_row("user_id", "INTEGER"),
+
+    sql.call_row("deleted", "DATE", default='current_date'),
+
+
+    sql.call_forgen(key="user_id", foreign_table = "users", foreign_column = "id" )
+]
+
+
+sql.conect("users.sqlite")
+
+sql.run(sql.create_table("admin", ','.join(admin_sql)))
+sql.run(sql.create_table("users", ','.join(user_sql)))
+sql.run(sql.create_table("files", ','.join(file_table)))
 
 
 
 #login_page(window).place(x=5, y=0)
 #admin_login(window).place(x=5, y=0)
-window.mainloop()
+# window.mainloop()
 
 
