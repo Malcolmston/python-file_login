@@ -2,6 +2,7 @@ import sqlite3
 import numpy
 import re
 
+from validation import hide_password
 
 # replace all the charicters in a string with a new charicter
 def replace_all(sub, new_line, string):
@@ -29,6 +30,10 @@ class SQLHelper:
     # allows for a user to connect there server
     def conect(self, name):
         conn = sqlite3.connect(name)
+
+
+        conn.create_function("hash", 1, hide_password)
+
         cursor = conn.cursor()
         self.name = name
         self.cursor = cursor
