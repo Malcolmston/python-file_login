@@ -1,4 +1,5 @@
 import hashlib
+import re
 
 def hide_password(password = None, salt = ''):
     '''
