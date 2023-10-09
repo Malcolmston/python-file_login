@@ -201,7 +201,7 @@ sql.run(sql.create_table("files", ','.join(file_table)))
 
 
 sql.run( 
-    sql.insert("users", "dip_name, username, password, email, type, deleted", "'a','a','a','a','basic', current_date")
+    sql.insert("users", "dip_name, username, password, email, type, deleted", "'a','a',hash('a'),'a','basic', current_date")
 )
 
 
