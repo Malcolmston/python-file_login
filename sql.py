@@ -53,6 +53,11 @@ class SQLHelper:
         except NameError:
             print(NameError)
             return False
+        
+    def check(self, if_statement = ''):
+        expression = f"CHECK( {if_statement} )"
+        
+        return expression
 
     # runs a line a sql code with an expected output
     def runRet(self, txt):
@@ -78,7 +83,6 @@ class SQLHelper:
                  data_type=None,
                  is_null=False,
                  is_unique=False,
-                 check='',
                  default='',
                  pk=False):
 
@@ -95,7 +99,7 @@ class SQLHelper:
                 "the default clause will always be run if a case is null. consider removing the is null parameter."
             )
 
-        expresion = f"{name_tag} {data_type} {'' if is_null else 'NOT NULL '} {'UNIQUE ' if is_unique else ' '} {'PRIMARY KEY ' if pk else' '}  {f'CHECK({check})' if not (check == '') else '' }"
+        expresion = f"{name_tag} {data_type} {'' if is_null else 'NOT NULL '} {'UNIQUE ' if is_unique else ' '} {'PRIMARY KEY ' if pk else' '}"
 
         return replace_all("  ", " ", expresion)[:-1]
 
