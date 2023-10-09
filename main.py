@@ -148,19 +148,20 @@ def signup_page(window = window):
 
 
 user_sql = [
-    sql.call_row("id", "INTEGER", False, False, '', '', True),
+    sql.call_row("id", "INTEGER", pk = True),
     sql.call_row("dip_name", "VARCHAR(255)"),
     sql.call_row("username", "VARCHAR(100)", False, True),
     sql.call_row("password", "VARCHAR(255)"),
     sql.call_row("email", "VARCHAR(255)", False, True),
     sql.call_row("type", "VARCHAR(100)", default='basic', is_null=True),
     sql.call_row("admin_id", "VARCHAR(100)", default='', is_null=True),
-    sql.call_row("deleted", "DATE", default='current_date'),
-    sql.call_forgen(key="admin_id", foreign_table = "admin", foreign_column = "pwd" )
+    sql.call_row("deleted", "DATE", is_null=True),
+    sql.call_forgen(key="admin_id", foreign_table = "admin", foreign_column = "pwd" ),
+    sql.check('type == "basic" OR type == "admin"'),
 ]
 
 admin_sql = [
-        sql.call_row("id", "INTEGER", False, False, '', '', True),
+        sql.call_row("id", "INTEGER", pk = True),
         sql.call_row("pwd", "VARCHAR(255)", is_unique=True)
 
 ]
@@ -198,6 +199,10 @@ sql.run(sql.create_table("admin", ','.join(admin_sql)))
 sql.run(sql.create_table("users", ','.join(user_sql)))
 sql.run(sql.create_table("files", ','.join(file_table)))
 
+
+sql.run( 
+    sql.insert("users", "dip_name, username, password, email, type, deleted", "'a','a','a','a','basic', current_date")
+)
 
 
 #login_page(window).place(x=5, y=0)
