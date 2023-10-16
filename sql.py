@@ -186,8 +186,8 @@ class SQLHelper:
         return expresion
 
     # selects using a limited pool
-    def select_limit(self, rows, name, limit):
-        expresion = f"SELECT {rows} FROM {name} LIMIT {limit} ON CONFLECT DO NOTHING"
+    def select_limit(self, rows, name, limit, where = ""):
+        expresion = f"SELECT {rows} FROM {name}{ ' WHERE '+where if where != '' else ''} LIMIT {limit}"
 
         return expresion
     
