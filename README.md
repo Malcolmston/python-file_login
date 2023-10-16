@@ -21,3 +21,24 @@ a python app that allows a user to creat accounts, log in, and store files to a 
 | Create a new user | X |
 
 
+
+
+## validation
+1. basic validation
+    there must be 3 letters
+    there must be 1 uppercase letter
+    there must be 1 numbers
+    there must be 0 to 3 symble
+    length must be between 4 and 9
+
+    '''reg-ex
+    ([A-Z]{1,4})+([a-z]{3,7})+([0-9]{2,7})+(\w{0,3})
+    '''
+
+2. admin validation
+    there must be 5 letters
+    there must be 1 uppercase letter
+    there must be 2 numbers
+    there must be 1 symble
+    length must be between 7 and 18
+    ([A-Z]{1,4})+([a-z]{5,9})+([0-9]{2,7})+(\w{1,3})

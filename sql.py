@@ -2,6 +2,7 @@ import sqlite3
 import numpy
 import re
 
+from validation import hide_password
 
 # replace all the charicters in a string with a new charicter
 def replace_all(sub, new_line, string):
@@ -29,6 +30,10 @@ class SQLHelper:
     # allows for a user to connect there server
     def conect(self, name):
         conn = sqlite3.connect(name)
+
+
+        conn.create_function("hash", 2, hide_password)
+
         cursor = conn.cursor()
         self.name = name
         self.cursor = cursor
@@ -40,6 +45,7 @@ class SQLHelper:
 
     
         # runs a line a sql code
+   
     def run(self, txt, *extra):
         try:
             if extra:
@@ -171,6 +177,7 @@ class SQLHelper:
         expresion = f"SELECT {rows} FROM {name}{ ' WHERE '+where if where != '' else ''}"
 
         return expresion
+    
     
     # will selcet values that are new from a table. it uses the same SQL as select_column with the keyword "DISTINCT"
     def select_distinct(self, rows, name):
