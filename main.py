@@ -159,7 +159,6 @@ def is_deleted(username):
     return False if (ans == None and ans == "None" and  ans == 'Null' and ans == 'null' and ans == 0) else True
 
 
-
 def user_exsist(username):
     '''user_exsist
     a function that checks if a user exists by there username
@@ -172,6 +171,27 @@ def user_exsist(username):
     ans = sql.runRet( sql.select_column("username", 'users', f'username = "{username}"') )
     return is_deleted(username) or ans is not None and len(ans) > 0 and ans is not [] 
 
+
+def signup(dip_name, username,password, email):
+    '''signup
+    Parameters:
+       dip_name (str): name of the user
+       username (str): username of the user
+       password (str): password of the user that will be hashed before entering the table
+       email (str): email of the user
+    
+    Return:
+        True if successful, False otherwise. 
+    '''
+
+    if not user_exsist(username):
+        return False
+    
+    else:
+        sql.run( 
+        sql.insert("users", "dip_name, username, password, email, type, deleted",  f"'{dip_name}','{username}',hash('{password}',''),'{email}','basic'")
+        )   
+        return True
 
 
 
