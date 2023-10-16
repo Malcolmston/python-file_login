@@ -32,7 +32,7 @@ class SQLHelper:
         conn = sqlite3.connect(name)
 
 
-        conn.create_function("hash", 1, hide_password)
+        conn.create_function("hash", 2, hide_password)
 
         cursor = conn.cursor()
         self.name = name
@@ -45,6 +45,7 @@ class SQLHelper:
 
     
         # runs a line a sql code
+   
     def run(self, txt, *extra):
         try:
             if extra:
@@ -176,6 +177,7 @@ class SQLHelper:
         expresion = f"SELECT {rows} FROM {name}{ ' WHERE '+where if where != '' else ''}"
 
         return expresion
+    
     
     # will selcet values that are new from a table. it uses the same SQL as select_column with the keyword "DISTINCT"
     def select_distinct(self, rows, name):
