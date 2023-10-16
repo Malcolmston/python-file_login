@@ -147,6 +147,19 @@ def signup_page(window = window):
 
 
 
+def is_deleted(username):
+    '''is deleted
+    this function checks if a user has soft deleted there acoount
+    Paremeters:
+        username (str): the username of the user
+    Returns:
+        bool that is true if the user has soft deleted
+    '''
+    ans = sql.runRet( sql.select_limit("deleted", 'users','1', f'username = "{username}"') )[0]
+    return False if (ans == None and ans == "None" and  ans == 'Null' and ans == 'null' and ans == 0) else True
+
+
+
 def user_exsist(username):
     '''user_exsist
     a function that checks if a user exists by there username
@@ -157,7 +170,7 @@ def user_exsist(username):
         Bool if the user exists; True, False otherwise
     '''
     ans = sql.runRet( sql.select_column("username", 'users', f'username = "{username}"') )
-    return ans is not None and len(ans) > 0 and ans is not []
+    return is_deleted(username) or ans is not None and len(ans) > 0 and ans is not [] 
 
 
 
@@ -218,8 +231,6 @@ sql.run(sql.create_table("files", ','.join(file_table)))
 sql.run( 
     sql.insert("admin", "pwd", "'2er32'")
 )
-
-
 
 #login_page(window).place(x=5, y=0)
 #admin_login(window).place(x=5, y=0)
