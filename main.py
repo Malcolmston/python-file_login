@@ -147,6 +147,22 @@ def signup_page(window = window):
 
 
 
+def user_exsist(username):
+    '''user_exsist
+    a function that checks if a user exists by there username
+
+    Parameter:
+        username (str): username of the user
+    Returns:
+        Bool if the user exists; True, False otherwise
+    '''
+    ans = sql.runRet( sql.select_column("username", 'users', f'username = "{username}"') )
+    return ans is not None and len(ans) > 0 and ans is not []
+
+
+
+
+
 user_sql = [
     sql.call_row("id", "INTEGER", pk = True),
     sql.call_row("dip_name", "VARCHAR(255)"),
@@ -203,9 +219,6 @@ sql.run(
     sql.insert("admin", "pwd", "'2er32'")
 )
 
-sql.run( 
-    sql.insert("users", "dip_name, username, password, email, type, deleted", f"'a','a',hash('a',''),'a','basic', current_date")
-)
 
 
 #login_page(window).place(x=5, y=0)
