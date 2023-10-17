@@ -287,11 +287,6 @@ def admin_login(username, password, uuid):
         return False
 
 
-#print( admin_login("a","a", 'ab55'))
-p = sql.select_column('admin_id', 'users', 'id == "1"')
-
-ans = sql.runRet( sql.select_column("pwd", "admin", f"id == ({p})") )
-
 print( ans )
 
 #login_page(window).place(x=5, y=0)
