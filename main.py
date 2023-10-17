@@ -267,11 +267,7 @@ def login(username, password) -> (bool):
         line =  sql.runRet(
     sql.select_column("dip_name, username, password, email, type", "users", f"hash('{password}','') == password AND username == '{username}'")
 )
-        return line is not [] and len(line) != 0 
-
-
-
-print( login("a","a"))
+        return line is not [] and len(line) != 0 if line[0][4] == "basic" else False 
 
 #login_page(window).place(x=5, y=0)
 #admin_login(window).place(x=5, y=0)
