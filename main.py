@@ -147,6 +147,55 @@ def signup_page(window = window):
 
 
 
+def is_deleted(username):
+    '''is deleted
+    this function checks if a user has soft deleted there acoount
+    Paremeters:
+        username (str): the username of the user
+    Returns:
+        bool that is true if the user has soft deleted
+    '''
+    ans = sql.runRet( sql.select_limit("deleted", 'users','1', f'username = "{username}"') )[0]
+    return False if (ans == None and ans == "None" and  ans == 'Null' and ans == 'null' and ans == 0) else True
+
+
+def user_exsist(username):
+    '''user_exsist
+    a function that checks if a user exists by there username
+
+    Parameter:
+        username (str): username of the user
+    Returns:
+        Bool if the user exists; True, False otherwise
+    '''
+    ans = sql.runRet( sql.select_column("username", 'users', f'username = "{username}"') )
+    return is_deleted(username) or ans is not None and len(ans) > 0 and ans is not [] 
+
+
+def signup(dip_name, username,password, email):
+    '''signup
+    Parameters:
+       dip_name (str): name of the user
+       username (str): username of the user
+       password (str): password of the user that will be hashed before entering the table
+       email (str): email of the user
+    
+    Return:
+        True if successful, False otherwise. 
+    '''
+
+    if not user_exsist(username):
+        return False
+    
+    else:
+        sql.run( 
+        sql.insert("users", "dip_name, username, password, email, type, deleted",  f"'{dip_name}','{username}',hash('{password}',''),'{email}','basic'")
+        )   
+        return True
+
+
+
+
 user_sql = [
     sql.call_row("id", "INTEGER", pk = True),
     sql.call_row("dip_name", "VARCHAR(255)"),
@@ -199,14 +248,46 @@ sql.run(sql.create_table("admin", ','.join(admin_sql)))
 sql.run(sql.create_table("users", ','.join(user_sql)))
 sql.run(sql.create_table("files", ','.join(file_table)))
 
-sql.run( 
-    sql.insert("admin", "pwd", "'2er32'")
-)
+# sql.run(  sql.insert("admin", "pwd", "'2er32'") )
 
-sql.run( 
-    sql.insert("users", "dip_name, username, password, email, type, deleted", f"'a','a',hash('a',''),'a','basic', current_date")
-)
+password = "a"
 
+def login(username, password, type = "basic") -> (bool):
+    '''login
+    allows a user to login with username and password
+
+    Paremeters:
+       username (str): username of the user
+       password (str): password of the user that will be hashed before entering the table
+        
+    Returns:
+        (Bool): True if login was successful or False otherwise
+        '''
+    if user_exsist(username):
+        line =  sql.runRet(
+    sql.select_column("dip_name, username, password, email, type", "users", f"hash('{password}','') == password AND username == '{username}'")
+)
+        return line is not [] and len(line) != 0 if line[0][4] == type else False 
+
+
+def admin_login(username, password, uuid):
+    '''Login
+    a function that allows admin users to login
+    '''
+    user= sql.runRet(sql.select_column("id, type, admin_id", "users", f"username == '{username}'"))
+
+    if user[0][1] == "admin":
+     
+        uuid = sql.runRet(sql.select_column("pwd", "admin",f"id == '{user[0][0]}' "))[0][0]
+    
+        ans = sql.runRet( sql.select_column("username", 'users', f'password == hash("{password}", "{uuid}")') )
+
+        return login(username, ans+password, 'admin')
+    else:
+        return False
+
+
+print( ans )
 
 #login_page(window).place(x=5, y=0)
 #admin_login(window).place(x=5, y=0)
