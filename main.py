@@ -252,7 +252,7 @@ sql.run(sql.create_table("files", ','.join(file_table)))
 
 password = "a"
 
-def login(username, password) -> (bool):
+def login(username, password, type = "basic") -> (bool):
     '''login
     allows a user to login with username and password
 
@@ -267,7 +267,32 @@ def login(username, password) -> (bool):
         line =  sql.runRet(
     sql.select_column("dip_name, username, password, email, type", "users", f"hash('{password}','') == password AND username == '{username}'")
 )
-        return line is not [] and len(line) != 0 if line[0][4] == "basic" else False 
+        return line is not [] and len(line) != 0 if line[0][4] == type else False 
+
+
+def admin_login(username, password, uuid):
+    '''Login
+    a function that allows admin users to login
+    '''
+    user= sql.runRet(sql.select_column("id, type, admin_id", "users", f"username == '{username}'"))
+
+    if user[0][1] == "admin":
+     
+        uuid = sql.runRet(sql.select_column("pwd", "admin",f"id == '{user[0][0]}' "))[0][0]
+    
+        ans = sql.runRet( sql.select_column("username", 'users', f'password == hash("{password}", "{uuid}")') )
+
+        return login(username, ans+password, 'admin')
+    else:
+        return False
+
+
+#print( admin_login("a","a", 'ab55'))
+p = sql.select_column('admin_id', 'users', 'id == "1"')
+
+ans = sql.runRet( sql.select_column("pwd", "admin", f"id == ({p})") )
+
+print( ans )
 
 #login_page(window).place(x=5, y=0)
 #admin_login(window).place(x=5, y=0)
