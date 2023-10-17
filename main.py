@@ -248,9 +248,30 @@ sql.run(sql.create_table("admin", ','.join(admin_sql)))
 sql.run(sql.create_table("users", ','.join(user_sql)))
 sql.run(sql.create_table("files", ','.join(file_table)))
 
-sql.run( 
-    sql.insert("admin", "pwd", "'2er32'")
+# sql.run(  sql.insert("admin", "pwd", "'2er32'") )
+
+password = "a"
+
+def login(username, password) -> (bool):
+    '''login
+    allows a user to login with username and password
+
+    Paremeters:
+       username (str): username of the user
+       password (str): password of the user that will be hashed before entering the table
+        
+    Returns:
+        (Bool): True if login was successful or False otherwise
+        '''
+    if user_exsist(username):
+        line =  sql.runRet(
+    sql.select_column("dip_name, username, password, email, type", "users", f"hash('{password}','') == password AND username == '{username}'")
 )
+        return line is not [] and len(line) != 0 
+
+
+
+print( login("a","a"))
 
 #login_page(window).place(x=5, y=0)
 #admin_login(window).place(x=5, y=0)
